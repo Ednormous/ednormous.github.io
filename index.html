@@ -1,7 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <title>Your Name | Personal Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+<body>
 
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">Your Logo</div>
+        <ul class="nav-links">
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#github">GitHub</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <!-- Mobile Menu Icon -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <h1>Welcome to My Personal Website</h1>
+        <p>I'm a developer passionate about coding and open-source.</p>
+        <a href="#github" class="btn">View My GitHub</a>
+    </header>
+
+    <!-- About Me Section -->
+    <section id="about" class="about-section">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <img src="your-photo.jpg" alt="Your Photo">
+            <p>Introduce yourself here. Share your interests, background, and anything you'd like visitors to know.</p>
+        </div>
+    </section>
+
+    <!-- GitHub Repositories Section -->
+    <section id="github" class="github-section">
+        <h2>My GitHub Repositories</h2>
+        <div id="repo-list" class="repo-list">
+            <!-- Repositories will be injected here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contact Me</h2>
+        <p>Feel free to reach out through any of the platforms below.</p>
+        <div class="social-links">
+            <a href="mailto:your-email@example.com">Email</a>
+            <a href="https://github.com/your-github-username">GitHub</a>
+            <a href="https://linkedin.com/in/your-linkedin-username">LinkedIn</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Your Name. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
 </html>

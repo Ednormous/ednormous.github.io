@@ -2,70 +2,149 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Name | Personal Website</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ednormous - Personal Tools & Resources</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">Your Logo</div>
-        <ul class="nav-links">
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#github">GitHub</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <!-- Mobile Menu Icon -->
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero-section">
-        <h1>Welcome to My Personal Website</h1>
-        <p>I'm a developer passionate about coding and open-source.</p>
-        <a href="#github" class="btn">View My GitHub</a>
+    <!-- Background Shapes -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <a href="/">Ednormous</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#tools" class="nav-link">Tools</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- About Me Section -->
-    <section id="about" class="about-section">
-        <h2>About Me</h2>
-        <div class="about-content">
-            <img src="your-photo.jpg" alt="Your Photo">
-            <p>Introduce yourself here. Share your interests, background, and anything you'd like visitors to know.</p>
-        </div>
-    </section>
+    <main>
+        <section class="hero">
+            <div class="hero-particles" id="particles-js"></div>
+            <div class="hero-content">
+                <h1>Welcome to <span class="highlight">Ednormous</span></h1>
+                <div class="typewriter-container">
+                    <p>Your personal toolkit for</p>
+                    <div class="typewriter-wrapper">
+                        <span class="typewriter" id="typewriter">productivity and creativity</span>
+                    </div>
+                </div>
+                <p>Discover a collection of minimalist, powerful tools designed to simplify your workflow.</p>
+                <a href="#tools" class="cta-button">Explore Tools</a>
+            </div>
+        </section>
 
-    <!-- GitHub Repositories Section -->
-    <section id="github" class="github-section">
-        <h2>My GitHub Repositories</h2>
-        <div id="repo-list" class="repo-list">
-            <!-- Repositories will be injected here by JavaScript -->
-        </div>
-    </section>
+        <section id="tools" class="tools-section">
+            <h2>Toolkit</h2>
+            <div class="tools-grid">
+                <!-- Tool cards -->
+                <div class="tool-card" style="--animation-order: 1;">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>PDF Tools</h3>
+                    <p>Manipulate, convert, and optimize PDF documents with ease using our suite of specialized tools.</p>
+                </div>
+                
+                <div class="tool-card" style="--animation-order: 2;">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Image Utilities</h3>
+                    <p>Transform, compress, and enhance your images with our collection of simple yet powerful image tools.</p>
+                </div>
+                
+                <div class="tool-card" style="--animation-order: 3;">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Code Formatter</h3>
+                    <p>Clean, format, and optimize your code across multiple programming languages with a single click.</p>
+                </div>
+            </div>
+            
+            <div class="feature-toolbar">
+                <div class="toolbar-header">
+                    <h3>Quick Access</h3>
+                    <p>Your most frequently used tools in one place</p>
+                </div>
+                <div class="toolbar-items">
+                    <div class="toolbar-item" data-tool="pdf">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                    <div class="toolbar-item" data-tool="image">
+                        <i class="fas fa-image"></i>
+                        <span>Images</span>
+                    </div>
+                    <div class="toolbar-item" data-tool="text">
+                        <i class="fas fa-text-height"></i>
+                        <span>Text</span>
+                    </div>
+                    <div class="toolbar-item" data-tool="code">
+                        <i class="fas fa-code"></i>
+                        <span>Code</span>
+                    </div>
+                    <div class="toolbar-item" data-tool="math">
+                        <i class="fas fa-calculator"></i>
+                        <span>Math</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <h2>Contact Me</h2>
-        <p>Feel free to reach out through any of the platforms below.</p>
-        <div class="social-links">
-            <a href="mailto:your-email@example.com">Email</a>
-            <a href="https://github.com/your-github-username">GitHub</a>
-            <a href="https://linkedin.com/in/your-linkedin-username">LinkedIn</a>
-        </div>
-    </section>
+        <section id="about" class="about-section">
+            <h2>About</h2>
+            <div class="about-content">
+                <p>Welcome to my personal workspace! I've created this collection of tools to streamline my daily tasks and boost productivity. Each tool is designed with minimalism and efficiency in mind, drawing inspiration from modern design aesthetics.</p>
+                <p>This site is continuously evolving as I add new tools and refine existing ones. Feel free to explore and use anything you find helpful!</p>
+            </div>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 Your Name. All rights reserved.</p>
+        <section id="contact" class="contact-section">
+            <h2>Connect</h2>
+            <div class="contact-content">
+                <p>Have suggestions for new tools or improvements to existing ones? I'd love to hear from you!</p>
+                <div class="social-links">
+                    <a href="https://github.com/Ednormous" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:contact@example.com" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Ednormous. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+    <!-- Particles.js for background animation -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
-</html>
+</html> 

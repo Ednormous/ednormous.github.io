@@ -187,8 +187,30 @@ function handleSingleFileSelection(file, displayElementId, processBtnId) {
                 <i class="fas fa-file-pdf file-icon"></i>
                 <span class="file-name">${file.name}</span>
                 <span class="file-size">(${formatFileSize(file.size)})</span>
+                <div class="file-actions">
+                    <button type="button" class="file-action-btn file-remove-btn" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
         `;
+        
+        // Store the file reference in the DOM
+        displayElement.file = file;
+        
+        // Add remove button handler
+        const removeBtn = displayElement.querySelector('.file-remove-btn');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Clear the display and disable the process button
+                displayElement.innerHTML = '';
+                displayElement.file = null;
+                if (processBtn) {
+                    processBtn.disabled = true;
+                }
+            });
+        }
     }
     
     if (processBtn) {
@@ -204,22 +226,35 @@ function handleMergeFileSelection(files) {
     const fileList = document.getElementById('merge-file-list');
     const processBtn = document.getElementById('merge-process-btn');
     
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        
-        if (!file.type.includes('pdf')) {
-            continue;
-        }
-        
+    // Filter only PDF files
+    const pdfFiles = Array.from(files).filter(file => file.type.includes('pdf'));
+    
+    if (pdfFiles.length === 0) {
+        showError('No valid PDF files were selected.');
+        return;
+    }
+    
+    for (let i = 0; i < pdfFiles.length; i++) {
+        const file = pdfFiles[i];
         const fileId = 'file-' + Math.random().toString(36).substr(2, 9);
         
         const listItem = document.createElement('li');
         listItem.setAttribute('data-file-id', fileId);
+        listItem.classList.add('file-list-item');
         listItem.innerHTML = `
+            <div class="file-handle">
+                <i class="fas fa-grip-lines"></i>
+            </div>
             <i class="fas fa-file-pdf file-icon"></i>
             <span class="file-name">${file.name}</span>
             <span class="file-size">(${formatFileSize(file.size)})</span>
             <div class="file-actions">
+                <button type="button" class="file-action-btn file-up-btn" title="Move Up">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+                <button type="button" class="file-action-btn file-down-btn" title="Move Down">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
                 <button type="button" class="file-action-btn file-remove-btn" title="Remove">
                     <i class="fas fa-times"></i>
                 </button>
@@ -231,12 +266,31 @@ function handleMergeFileSelection(files) {
         
         fileList.appendChild(listItem);
         
-        // Add remove button handler
+        // Add file action handlers
         const removeBtn = listItem.querySelector('.file-remove-btn');
+        const upBtn = listItem.querySelector('.file-up-btn');
+        const downBtn = listItem.querySelector('.file-down-btn');
+        
         removeBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             listItem.remove();
             updateMergeButtonState();
+        });
+        
+        upBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const prev = listItem.previousElementSibling;
+            if (prev) {
+                fileList.insertBefore(listItem, prev);
+            }
+        });
+        
+        downBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const next = listItem.nextElementSibling;
+            if (next) {
+                fileList.insertBefore(next, listItem);
+            }
         });
     }
     
@@ -247,7 +301,8 @@ function handleMergeFileSelection(files) {
         fileList.sortable = new Sortable(fileList, {
             animation: 150,
             ghostClass: 'sortable-ghost',
-            dragClass: 'sortable-drag'
+            dragClass: 'sortable-drag',
+            handle: '.file-handle'
         });
     }
 }
@@ -259,7 +314,7 @@ function updateMergeButtonState() {
     const fileList = document.getElementById('merge-file-list');
     const processBtn = document.getElementById('merge-process-btn');
     
-    if (fileList.children.length > 1) {
+    if (fileList.children.length >= 1) {
         processBtn.disabled = false;
     } else {
         processBtn.disabled = true;
@@ -294,10 +349,39 @@ function showError(message) {
  * Shows a success message and handles download of processed PDF
  * @param {Blob} pdfBlob - The processed PDF as a Blob
  * @param {string} filename - Suggested filename for download
+ * @param {string} toolId - ID of the tool container for displaying preview
  */
-function handleProcessedPDF(pdfBlob, filename) {
+function handleProcessedPDF(pdfBlob, filename, toolId) {
     // Use FileSaver.js for better cross-browser compatibility
     saveAs(pdfBlob, filename);
+    
+    // Create a preview if toolId is provided
+    if (toolId) {
+        try {
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'pdf-preview';
+            previewContainer.innerHTML = `
+                <h3>Preview of ${filename}</h3>
+                <div class="pdf-preview-container">
+                    <iframe src="${URL.createObjectURL(pdfBlob)}" width="100%" height="500px"></iframe>
+                </div>
+            `;
+            
+            // Add the preview to the tool container
+            const toolContainer = document.getElementById(toolId);
+            
+            // Remove any existing preview
+            const existingPreview = toolContainer.querySelector('.pdf-preview');
+            if (existingPreview) {
+                toolContainer.removeChild(existingPreview);
+            }
+            
+            toolContainer.appendChild(previewContainer);
+        } catch (previewError) {
+            console.warn('Could not create preview:', previewError);
+        }
+    }
+    
     alert('PDF processed successfully! Your download should begin automatically.');
 }
 
@@ -330,17 +414,41 @@ function setupMergePDFTool() {
                 const fileList = document.getElementById('merge-file-list');
                 const files = Array.from(fileList.children).map(li => li.file);
                 
-                if (files.length < 2) {
-                    showError('Please select at least two PDF files to merge.');
+                if (files.length === 0) {
+                    showError('Please select at least one PDF file.');
                     return;
                 }
                 
                 // Create a new PDF document
                 const mergedPdf = await PDFDocument.create();
                 
+                // Show a progress indicator
+                const progressContainer = document.createElement('div');
+                progressContainer.className = 'merge-progress-container';
+                progressContainer.innerHTML = `
+                    <div class="merge-progress">
+                        <div class="merge-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="merge-progress-text">Processing file 0/${files.length}</div>
+                `;
+                
+                const actionsContainer = document.querySelector('#merge-tool .process-actions');
+                actionsContainer.appendChild(progressContainer);
+                
                 // Process all PDFs in order of the list
-                for (const file of files) {
-                    const fileArrayBuffer = await readFileAsArrayBuffer(file);
+                for (let i = 0; i < files.length; i++) {
+                    // Update progress
+                    const progressBar = progressContainer.querySelector('.merge-progress-bar');
+                    const progressText = progressContainer.querySelector('.merge-progress-text');
+                    const progress = Math.round(((i) / files.length) * 100);
+                    
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `Processing file ${i+1}/${files.length}: ${files[i].name}`;
+                    
+                    // Small delay to allow UI to update
+                    await new Promise(resolve => setTimeout(resolve, 10)); 
+                    
+                    const fileArrayBuffer = await readFileAsArrayBuffer(files[i]);
                     const pdf = await PDFDocument.load(fileArrayBuffer);
                     
                     // Copy all pages from current PDF to the merged PDF
@@ -350,14 +458,49 @@ function setupMergePDFTool() {
                     });
                 }
                 
+                // Final progress update
+                const progressBar = progressContainer.querySelector('.merge-progress-bar');
+                const progressText = progressContainer.querySelector('.merge-progress-text');
+                progressBar.style.width = '100%';
+                progressText.textContent = 'Creating final document...';
+                
                 // Save the merged PDF
                 const mergedPdfBytes = await mergedPdf.save();
                 const mergedPdfBlob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
                 
-                handleProcessedPDF(mergedPdfBlob, 'merged_document.pdf');
+                // Generate a meaningful filename
+                let mergedFileName = 'merged_document.pdf';
+                if (files.length === 1) {
+                    // If only one file, use its name with a prefix
+                    const originalName = files[0].name;
+                    const baseName = originalName.substr(0, originalName.lastIndexOf('.')) || originalName;
+                    mergedFileName = `${baseName}_processed.pdf`;
+                } else if (files.length > 1) {
+                    // If multiple files, try to create a meaningful name with the first two files
+                    const firstFileName = files[0].name.substr(0, files[0].name.lastIndexOf('.')) || files[0].name;
+                    const secondFileName = files[1].name.substr(0, files[1].name.lastIndexOf('.')) || files[1].name;
+                    
+                    if (files.length === 2) {
+                        mergedFileName = `${firstFileName}_${secondFileName}.pdf`;
+                    } else {
+                        mergedFileName = `${firstFileName}_${secondFileName}_plus_${files.length - 2}_more.pdf`;
+                    }
+                }
+                
+                // Remove the progress indicator
+                actionsContainer.removeChild(progressContainer);
+                
+                handleProcessedPDF(mergedPdfBlob, mergedFileName, 'merge-tool');
+                
             } catch (error) {
                 console.error('Error merging PDFs:', error);
                 showError('An error occurred while merging PDFs. Please try again.');
+                
+                // Remove progress indicator if it exists
+                const progressContainer = document.querySelector('.merge-progress-container');
+                if (progressContainer) {
+                    progressContainer.remove();
+                }
             } finally {
                 processBtn.disabled = false;
                 processBtn.innerHTML = '<i class="fas fa-object-group"></i> Merge PDFs';
@@ -459,7 +602,7 @@ function setupPageNumbersTool() {
                 const baseName = originalName.substr(0, originalName.lastIndexOf('.')) || originalName;
                 const numberedFileName = `${baseName}_numbered.pdf`;
                 
-                handleProcessedPDF(modifiedPdfBlob, numberedFileName);
+                handleProcessedPDF(modifiedPdfBlob, numberedFileName, 'page-numbers-tool');
             } catch (error) {
                 console.error('Error adding page numbers:', error);
                 showError('An error occurred while adding page numbers. Please try again.');
@@ -694,7 +837,7 @@ function setupWatermarkTool() {
                 const baseName = originalName.substr(0, originalName.lastIndexOf('.')) || originalName;
                 const watermarkedFileName = `${baseName}_watermarked.pdf`;
                 
-                handleProcessedPDF(modifiedPdfBlob, watermarkedFileName);
+                handleProcessedPDF(modifiedPdfBlob, watermarkedFileName, 'watermark-tool');
             } catch (error) {
                 console.error('Error adding watermark:', error);
                 showError('An error occurred while adding watermark. Please try again.');
@@ -762,7 +905,7 @@ function setupCompressTool() {
                 const baseName = originalName.substr(0, originalName.lastIndexOf('.')) || originalName;
                 const compressedFileName = `${baseName}_compressed.pdf`;
                 
-                handleProcessedPDF(compressedPdfBlob, compressedFileName);
+                handleProcessedPDF(compressedPdfBlob, compressedFileName, 'compress-tool');
             } catch (error) {
                 console.error('Error compressing PDF:', error);
                 showError('An error occurred while compressing the PDF. Please try again.');
@@ -909,7 +1052,7 @@ function setupEncryptTool() {
                 const baseName = originalName.substr(0, originalName.lastIndexOf('.')) || originalName;
                 const encryptedFileName = `${baseName}_encrypted.pdf`;
                 
-                handleProcessedPDF(encryptedPdfBlob, encryptedFileName);
+                handleProcessedPDF(encryptedPdfBlob, encryptedFileName, 'encrypt-tool');
             } catch (error) {
                 console.error('Error encrypting PDF:', error);
                 showError('An error occurred while encrypting the PDF. Please try again.');

@@ -801,4 +801,150 @@
         margin-right: 0;
         margin-bottom: 5px;
     }
+}
+
+/* Add styling for file handling and ordering */
+.file-list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.2s ease;
+}
+
+.file-list-item:hover {
+    background-color: #f0f0f0;
+    border-color: #d0d0d0;
+}
+
+.file-handle {
+    cursor: grab;
+    padding: 0 8px;
+    margin-right: 8px;
+    color: #999;
+}
+
+.file-handle:hover {
+    color: #555;
+}
+
+.file-list-item .file-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+}
+
+.file-action-btn {
+    background: none;
+    border: none;
+    color: #777;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.file-action-btn:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.file-remove-btn:hover {
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+.file-up-btn:hover, .file-down-btn:hover {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+/* Progress bar for merge operation */
+.merge-progress-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.merge-progress {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.merge-progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.merge-progress-text {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* PDF Preview */
+.pdf-preview {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.pdf-preview h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.pdf-preview-container {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.pdf-preview-container iframe {
+    border: none;
+    display: block;
+}
+
+/* Selected file item styling for single file tools */
+.selected-file-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.selected-file-item .file-icon {
+    margin-right: 10px;
+    color: #f44336;
+}
+
+.selected-file-item .file-name {
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.selected-file-item .file-size {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.selected-file-item .file-actions {
+    margin-left: auto;
 } 

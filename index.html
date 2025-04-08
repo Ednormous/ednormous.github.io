@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ednormous | Professional Portfolio</title>
+    <title>Edward Wang | Computing & Data Science</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +21,94 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="portfolio/css/style.css">
+    
+    <!-- Custom Animation Styles -->
+    <style>
+        /* Project animation enhancements */
+        .project-card {
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease;
+            will-change: transform;
+            opacity: 1 !important; /* Ensure cards are visible */
+            display: block;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Fix for AOS animations to ensure visibility */
+        [data-aos] {
+            opacity: 1 !important; /* Ensure visibility of AOS elements */
+            transform: none !important; /* Reset any transforms that might hide elements */
+            transition: all 0.5s ease;
+        }
+        
+        /* Re-enable AOS animations only when they're actually triggered */
+        [data-aos].aos-animate {
+            opacity: 1 !important;
+        }
+        
+        /* Only apply the flip animation to project items specifically */
+        .project-item[data-aos="flip-left"] {
+            opacity: 0;
+            transform: perspective(2500px) rotateY(90deg) !important;
+        }
+        
+        .project-item[data-aos="flip-left"].aos-animate {
+            opacity: 1;
+            transform: perspective(2500px) rotateY(0) !important;
+        }
+        
+        /* Enhanced timeline animations */
+        .timeline-marker {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-marker {
+            transform: scale(1.3);
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-content {
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-content {
+            transform: translateX(10px);
+        }
+        
+        .timeline-date {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timeline-date:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.5s ease;
+        }
+        
+        .timeline-item:hover .timeline-date:after {
+            width: 100%;
+        }
+        
+        /* Fix for project grid */
+        .projects-grid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .project-item {
+            display: block !important;
+            opacity: 1 !important;
+        }
+    </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true">
     <!-- Animated Background -->
@@ -36,7 +124,7 @@
     <!-- Navigation -->
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Ednormous</a>
+            <a class="navbar-brand" href="#">Edward Wang</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -73,12 +161,12 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
-                    <h1 class="display-4">Hi, I'm <span class="highlight">Ednormous</span></h1>
+                    <h1 class="display-4">Hi, I'm <span class="highlight">Edward</span></h1>
                     <div class="typewriter-container">
                         <span class="prefix">I'm a </span>
                         <span class="typewriter" id="profession-typewriter"></span>
                     </div>
-                    <p class="lead">Creating innovative solutions through clean code and thoughtful design.</p>
+                    <p class="lead">Transforming data into meaningful insights through analytical approaches and technical solutions.</p>
                     <div class="hero-buttons">
                         <a href="#projects" class="btn btn-primary btn-lg">View My Work</a>
                         <a href="#contact" class="btn btn-outline-primary btn-lg">Get In Touch</a>
@@ -88,16 +176,16 @@
                     <div class="hero-image-container">
                         <div class="floating-elements">
                             <div class="floating-tech-item" data-aos="zoom-in" data-aos-delay="500">
-                                <i class="fab fa-js-square"></i>
+                                <i class="fab fa-python"></i>
                             </div>
                             <div class="floating-tech-item" data-aos="zoom-in" data-aos-delay="700">
-                                <i class="fab fa-react"></i>
+                                <i class="fas fa-chart-line"></i>
                             </div>
                             <div class="floating-tech-item" data-aos="zoom-in" data-aos-delay="900">
-                                <i class="fab fa-node-js"></i>
+                                <i class="fas fa-database"></i>
                             </div>
                             <div class="floating-tech-item" data-aos="zoom-in" data-aos-delay="1100">
-                                <i class="fab fa-python"></i>
+                                <i class="fas fa-code"></i>
                             </div>
                         </div>
                         <div class="hero-image"></div>
@@ -129,20 +217,20 @@
                 <div class="col-lg-7" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
                     <div class="about-content">
                         <h3>Who am I?</h3>
-                        <p>I'm a passionate software developer and problem solver with a strong background in creating elegant, user-centered solutions. My journey in tech began with a curiosity about how things work, which has evolved into a career focused on building meaningful applications that solve real problems.</p>
-                        <p>I specialize in full-stack development with expertise in JavaScript frameworks like React and Node.js, along with experience in UI/UX design principles. I believe in writing clean, maintainable code and implementing thoughtful design to create exceptional user experiences.</p>
+                        <p>I'm a Computing and Data Science student passionate about using analytical approaches to solve real-world problems. Currently pursuing my Bachelor of Advanced Computer Science with Honours, I combine strong technical skills with an analytical mindset to derive meaningful insights from data.</p>
+                        <p>My academic journey has equipped me with expertise in Python and R programming, statistical analysis, and data visualization techniques. I'm particularly interested in machine learning applications and building effective data processing systems that drive decision-making.</p>
                         <div class="about-details">
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul class="list-unstyled">
-                                        <li><strong>Name:</strong> Ednormous</li>
-                                        <li><strong>Experience:</strong> 5+ years</li>
+                                        <li><strong>Degree:</strong> Computing & Data Science</li>
+                                        <li><strong>University:</strong> UWA</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="list-unstyled">
-                                        <li><strong>Location:</strong> San Francisco, CA</li>
-                                        <li><strong>Available:</strong> For freelance & full-time</li>
+                                        <li><strong>Location:</strong> Australia</li>
+                                        <li><strong>Available:</strong> For graduate programs</li>
                                     </ul>
                                 </div>
                             </div>
@@ -163,25 +251,16 @@
             <div class="section-header" data-aos="fade-up">
                 <h2>My Skills</h2>
                 <div class="section-divider"></div>
-                <p>A collection of technologies and tools I've mastered over the years</p>
+                <p>Technical abilities I've developed through academic and practical experience</p>
             </div>
             <div class="skills-container">
                 <div class="row">
                     <div class="col-md-6" data-aos="fade-right" data-aos-duration="1000">
                         <div class="skills-category">
-                            <h3>Development</h3>
+                            <h3>Programming & Analysis</h3>
                             <div class="skill-item">
                                 <div class="skill-info">
-                                    <h4>JavaScript</h4>
-                                    <span>95%</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <h4>React.js</h4>
+                                    <h4>Python</h4>
                                     <span>90%</span>
                                 </div>
                                 <div class="progress">
@@ -190,7 +269,7 @@
                             </div>
                             <div class="skill-item">
                                 <div class="skill-info">
-                                    <h4>Node.js</h4>
+                                    <h4>R and RStudio</h4>
                                     <span>85%</span>
                                 </div>
                                 <div class="progress">
@@ -199,7 +278,16 @@
                             </div>
                             <div class="skill-item">
                                 <div class="skill-info">
-                                    <h4>Python</h4>
+                                    <h4>Data Analysis</h4>
+                                    <span>85%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <h4>Regression Analysis</h4>
                                     <span>80%</span>
                                 </div>
                                 <div class="progress">
@@ -210,10 +298,10 @@
                     </div>
                     <div class="col-md-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
                         <div class="skills-category">
-                            <h3>Design & Tools</h3>
+                            <h3>Visualization & Web</h3>
                             <div class="skill-item">
                                 <div class="skill-info">
-                                    <h4>UI/UX Design</h4>
+                                    <h4>Data Visualization</h4>
                                     <span>85%</span>
                                 </div>
                                 <div class="progress">
@@ -222,16 +310,7 @@
                             </div>
                             <div class="skill-item">
                                 <div class="skill-info">
-                                    <h4>Figma</h4>
-                                    <span>80%</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <h4>Docker</h4>
+                                    <h4>PowerBI</h4>
                                     <span>75%</span>
                                 </div>
                                 <div class="progress">
@@ -240,11 +319,20 @@
                             </div>
                             <div class="skill-item">
                                 <div class="skill-info">
-                                    <h4>AWS</h4>
+                                    <h4>Front-end Basics</h4>
                                     <span>70%</span>
                                 </div>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <h4>Database Design</h4>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -260,49 +348,25 @@
             <div class="section-header" data-aos="fade-up">
                 <h2>My Projects</h2>
                 <div class="section-divider"></div>
-                <p>Featured work that showcases my skills and experience</p>
             </div>
             <div class="projects-filter" data-aos="fade-up" data-aos-delay="200">
                 <ul class="filter-controls">
                     <li class="active" data-filter="*">All</li>
-                    <li data-filter=".web">Web Development</li>
-                    <li data-filter=".app">Mobile Apps</li>
-                    <li data-filter=".design">UI/UX Design</li>
                 </ul>
             </div>
             <div class="row projects-grid">
-                <div class="col-lg-4 col-md-6 project-item web" data-aos="zoom-in" data-aos-delay="100">
+                <div class="col-lg-4 col-md-6 project-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="project-card">
                         <div class="project-image">
-                            <img src="https://via.placeholder.com/600x400" alt="Project 1">
+                            <img src="https://via.placeholder.com/600x400" alt="LLM Framework">
                         </div>
                         <div class="project-content">
-                            <h4>Personal Productivity Toolkit</h4>
-                            <p>A comprehensive collection of tools designed to boost productivity and streamline workflows.</p>
+                            <h4>Large Language Model Framework</h4>
+                            <p>Developed a RESTful API using open-source LLMs for document tagging and optimized search functionality.</p>
                             <div class="project-tech">
-                                <span>React</span>
-                                <span>Node.js</span>
-                                <span>MongoDB</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="tools.html" class="btn btn-sm btn-primary">View Project</a>
-                                <a href="#" class="btn btn-sm btn-outline-primary">Source Code</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 project-item app" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="https://via.placeholder.com/600x400" alt="Project 2">
-                        </div>
-                        <div class="project-content">
-                            <h4>AI-Powered Task Manager</h4>
-                            <p>Mobile application that uses AI to prioritize and schedule tasks efficiently.</p>
-                            <div class="project-tech">
-                                <span>React Native</span>
-                                <span>Firebase</span>
-                                <span>TensorFlow</span>
+                                <span>Python</span>
+                                <span>REST API</span>
+                                <span>NLP</span>
                             </div>
                             <div class="project-links">
                                 <a href="#" class="btn btn-sm btn-primary">View Project</a>
@@ -311,18 +375,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 project-item design" data-aos="zoom-in" data-aos-delay="300">
+                <div class="col-lg-4 col-md-6 project-item" data-aos="fade-up" data-aos-delay="200">
                     <div class="project-card">
                         <div class="project-image">
-                            <img src="https://via.placeholder.com/600x400" alt="Project 3">
+                            <img src="https://via.placeholder.com/600x400" alt="Forum Page">
                         </div>
                         <div class="project-content">
-                            <h4>Finance Dashboard Redesign</h4>
-                            <p>Complete UI/UX redesign for a financial analytics dashboard with improved data visualization.</p>
+                            <h4>Interactive Forum System</h4>
+                            <p>Full-stack forum application with user authentication, CRUD operations, and role-based permissions.</p>
                             <div class="project-tech">
-                                <span>Figma</span>
-                                <span>D3.js</span>
-                                <span>SASS</span>
+                                <span>HTML/CSS/JS</span>
+                                <span>Flask</span>
+                                <span>SQLite</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="btn btn-sm btn-primary">View Project</a>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 project-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/600x400" alt="Data Analysis">
+                        </div>
+                        <div class="project-content">
+                            <h4>Advanced Regression Models</h4>
+                            <p>Developed various regression models including linear, polynomial, logistic, and time series for predictive analytics.</p>
+                            <div class="project-tech">
+                                <span>R</span>
+                                <span>Python</span>
+                                <span>PowerBI</span>
                             </div>
                             <div class="project-links">
                                 <a href="#" class="btn btn-sm btn-primary">View Project</a>
@@ -332,11 +416,17 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
-                <a href="#" class="btn btn-primary">View All Projects</a>
+            
+            <div class="projects-footer" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
+                <div class="text-center mt-5">
+                    <a href="#" class="btn btn-primary">View All Projects</a>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
 
     <!-- Experience Section -->
     <section id="experience" class="experience-section">
@@ -347,31 +437,31 @@
                 <p>My professional journey and career highlights</p>
             </div>
             <div class="timeline">
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="timeline-marker"></div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="timeline-marker" data-aos="zoom-in" data-aos-delay="400"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">2021 - Present</div>
-                        <h3>Senior Frontend Developer</h3>
-                        <h4>TechCorp, Inc.</h4>
-                        <p>Lead frontend development for multiple projects, architecting scalable solutions and mentoring junior developers. Implemented modern UI libraries and performance optimization techniques.</p>
+                        <div class="timeline-date" data-aos="fade-left" data-aos-delay="500">Dec 2021 - Present</div>
+                        <h3>Tutor</h3>
+                        <h4>3E Learning, Willetton</h4>
+                        <p>Compile tailored weekly booklets for primary and high school students. Maintain regular communication with management to ensure prompt problem-solving. Teach both one-on-one and group classes while patiently addressing student questions and parent concerns.</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="timeline-marker"></div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="timeline-marker" data-aos="zoom-in" data-aos-delay="500"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">2018 - 2021</div>
-                        <h3>Full Stack Developer</h3>
-                        <h4>InnoSoft Solutions</h4>
-                        <p>Developed and maintained full-stack applications using React, Node.js, and MongoDB. Collaborated with UX designers to implement responsive interfaces and improved application performance by 40%.</p>
+                        <div class="timeline-date" data-aos="fade-left" data-aos-delay="600">Dec 2020 - Present</div>
+                        <h3>Tutor</h3>
+                        <h4>Kumon Applecross</h4>
+                        <p>Quickly identify and address student difficulties through effective teaching approaches. Develop strong rapport with students to enhance learning outcomes and provide individualized attention to students with diverse learning needs.</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="timeline-marker"></div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">
+                    <div class="timeline-marker" data-aos="zoom-in" data-aos-delay="600"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">2016 - 2018</div>
-                        <h3>Web Developer</h3>
-                        <h4>CreativeTech Labs</h4>
-                        <p>Created responsive websites for clients across various industries. Utilized modern JavaScript frameworks and CSS preprocessors to build efficient, maintainable code.</p>
+                        <div class="timeline-date" data-aos="fade-left" data-aos-delay="700">Feb 2022 - Present</div>
+                        <h3>Computing & Data Science Student</h3>
+                        <h4>University of Western Australia</h4>
+                        <p>Pursuing an Honours degree in Computing and Data Science. Developing expertise in data preprocessing with Python and R, creating data visualizations with PowerBI, and constructing various regression models including linear, polynomial, logistic, time series, and more.</p>
                     </div>
                 </div>
             </div>
@@ -395,7 +485,7 @@
                             </div>
                             <div>
                                 <h3>Location</h3>
-                                <p>San Francisco, CA</p>
+                                <p>Perth, Australia</p>
                             </div>
                         </div>
                         <div class="contact-card">
@@ -404,7 +494,7 @@
                             </div>
                             <div>
                                 <h3>Email</h3>
-                                <p>contact@ednormous.com</p>
+                                <p>Not disclosed</p>
                             </div>
                         </div>
                         <div class="contact-card">
@@ -413,14 +503,14 @@
                             </div>
                             <div>
                                 <h3>Phone</h3>
-                                <p>+1 (555) 123-4567</p>
+                                <p>Not disclosed</p>
                             </div>
                         </div>
                         <div class="social-links">
                             <a href="https://github.com/Ednormous" class="social-icon" target="_blank">
                                 <i class="fab fa-github"></i>
                             </a>
-                            <a href="#" class="social-icon" target="_blank">
+                            <a href="https://www.linkedin.com/in/edward-wang-653096293/" class="social-icon" target="_blank">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
                             <a href="#" class="social-icon" target="_blank">
@@ -484,9 +574,9 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="footer-logo">
-                        <a href="#">Ednormous</a>
+                        <a href="#">Edward Wang</a>
                     </div>
-                    <p>Creating innovative solutions through clean code and thoughtful design.</p>
+                    <p>Transforming data into meaningful insights through analytical approaches and technical solutions.</p>
                 </div>
                 <div class="col-lg-4">
                     <h4>Quick Links</h4>
@@ -504,14 +594,14 @@
                     <h4>Connect</h4>
                     <div class="footer-social">
                         <a href="https://github.com/Ednormous" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.linkedin.com/in/edward-wang-653096293/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
                         <a href="#" target="_blank"><i class="fab fa-dribbble"></i></a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2024 Ednormous. All rights reserved.</p>
+                <p>&copy; 2024 Edward Wang. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -523,6 +613,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Load imagesLoaded before Isotope to ensure proper initialization -->
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     
     <!-- Custom JavaScript -->

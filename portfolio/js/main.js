@@ -8,12 +8,21 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize AOS animation library
+    // Initialize AOS animation library with custom settings for better performance
     AOS.init({
         duration: 800,
         easing: 'ease-in-out',
         once: true,
-        mirror: false
+        mirror: false,
+        disable: 'phone',
+        offset: 50,
+        anchorPlacement: 'top-bottom',
+        disableMutationObserver: false
+    });
+
+    // Reinitialize AOS when window is resized
+    window.addEventListener('resize', () => {
+        AOS.refresh();
     });
 
     // Navbar scroll effect
@@ -48,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('profession-typewriter')) {
         new Typed('#profession-typewriter', {
             strings: [
-                'Software Developer',
-                'UI/UX Designer',
-                'Problem Solver',
-                'Creative Thinker'
+                'Data Scientist',
+                'Python Developer',
+                'R Programmer',
+                'Analytics Specialist'
             ],
             typeSpeed: 60,
             backSpeed: 30,
@@ -64,22 +73,65 @@ document.addEventListener('DOMContentLoaded', () => {
     // Project filtering with Isotope
     let portfolioIsotope = document.querySelector('.projects-grid');
     if (portfolioIsotope) {
-        const iso = new Isotope(portfolioIsotope, {
-            itemSelector: '.project-item',
-            layoutMode: 'fitRows'
+        // Make sure projects are visible first before initializing Isotope
+        document.querySelectorAll('.project-item').forEach(item => {
+            item.style.opacity = "1";
+            item.style.display = "block";
         });
-
-        const filterControls = document.querySelectorAll('.filter-controls li');
-        filterControls.forEach(button => {
-            button.addEventListener('click', function() {
-                filterControls.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterValue = this.getAttribute('data-filter');
-                iso.arrange({
-                    filter: filterValue === '*' ? null : filterValue
-                });
+        
+        // Wait for images to load before initializing Isotope
+        window.addEventListener('load', () => {
+            // Initialize Isotope with simplified settings to avoid conflicts
+            const iso = new Isotope(portfolioIsotope, {
+                itemSelector: '.project-item',
+                layoutMode: 'fitRows',
+                transitionDuration: '0.4s',
+                hiddenStyle: {
+                    opacity: 0
+                },
+                visibleStyle: {
+                    opacity: 1
+                }
             });
+            
+            // Make sure images are loaded first
+            imagesLoaded(portfolioIsotope).on('progress', () => {
+                iso.layout();
+            });
+
+            // Make sure all project items are visible initially
+            setTimeout(() => {
+                iso.arrange();
+                document.querySelectorAll('.project-item').forEach(item => {
+                    item.style.opacity = "1";
+                    item.style.display = "block";
+                    item.classList.add('aos-animate');
+                });
+                // Force a refresh to ensure layout is correct
+                iso.layout();
+            }, 300);
+
+            // Only handle "All" filter now
+            const filterControls = document.querySelectorAll('.filter-controls li');
+            if (filterControls.length > 0) {
+                filterControls[0].addEventListener('click', function() {
+                    // Apply default "show all" filter
+                    iso.arrange({
+                        filter: null
+                    });
+                    
+                    // Ensure all items are visible
+                    setTimeout(() => {
+                        document.querySelectorAll('.project-item').forEach(item => {
+                            item.style.opacity = "1";
+                            item.style.display = "block";
+                        });
+                        
+                        // Force a layout update
+                        iso.layout();
+                    }, 500);
+                });
+            }
         });
     }
 
@@ -89,10 +141,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.getAttribute('href') !== '#') {
                 e.preventDefault();
                 
-                const target = document.querySelector(this.getAttribute('href'));
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
                 if (target) {
                     const headerHeight = document.querySelector('.navbar').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight;
+                    let targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    
+                    // Add extra offset for the experience section to prevent overlap
+                    if (targetId === '#experience') {
+                        targetPosition -= 20; // Adjust this value as needed
+                    }
+                    
+                    // Adjust for header height
+                    targetPosition -= headerHeight;
                     
                     window.scrollTo({
                         top: targetPosition,
@@ -209,11 +271,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add scroll animation to timeline items
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    timelineItems.forEach((item, index) => {
-        const delay = index * 200;
-        item.setAttribute('data-aos', index % 2 === 0 ? 'fade-right' : 'fade-left');
-        item.setAttribute('data-aos-delay', delay.toString());
-    });
+    // Enhanced timeline animation
+    const experienceSection = document.querySelector('#experience');
+    if (experienceSection) {
+        const experienceObserver = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                // Force refresh AOS animations when timeline is in view
+                document.querySelectorAll('.timeline-item').forEach(item => {
+                    item.classList.add('aos-animate');
+                });
+            }
+        }, { threshold: 0.2 });
+        
+        experienceObserver.observe(experienceSection);
+    }
 }); 

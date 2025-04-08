@@ -1,0 +1,804 @@
+/**
+ * Ednormous PDF Tools
+ * Stylesheet for the PDF tools functionality
+ * 
+ * This CSS file implements a clean, user-friendly interface for PDF manipulation
+ * tools with a strong focus on security and privacy.
+ * 
+ * @version 1.0.0
+ * @author Ednormous
+ * @license MIT
+ */
+
+/* ======================================
+   Back to Tools Button
+   ====================================== */
+.back-to-tools {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.back-to-tools:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .back-to-tools {
+        top: auto;
+        bottom: 30px;
+        right: 30px;
+    }
+}
+
+/* ======================================
+   PDF Hero Section
+   ====================================== */
+.pdf-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 1rem 3rem;
+    background-color: transparent;
+    position: relative;
+}
+
+.pdf-hero .hero-content {
+    max-width: 800px;
+    padding: 3rem;
+}
+
+.pdf-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.pdf-hero p {
+    font-size: 1.2rem;
+    color: var(--light-text);
+    margin-bottom: 2rem;
+}
+
+.security-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(156, 163, 104, 0.1);
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.security-badge i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* ======================================
+   PDF Tools Container
+   ====================================== */
+.pdf-tools-container {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 2rem;
+}
+
+@media (max-width: 991px) {
+    .pdf-tools-container {
+        flex-direction: column;
+    }
+}
+
+/* ======================================
+   PDF Tools Navigation
+   ====================================== */
+.pdf-tools-nav {
+    width: 250px;
+    flex-shrink: 0;
+    background-color: var(--section-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 150px);
+}
+
+.pdf-nav-btn {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pdf-nav-btn i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.pdf-nav-btn:hover {
+    background-color: rgba(156, 163, 104, 0.1);
+}
+
+.pdf-nav-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.pdf-nav-btn.active i {
+    color: white;
+}
+
+@media (max-width: 991px) {
+    .pdf-tools-nav {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        justify-content: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+        position: relative;
+        top: 0;
+        max-height: none;
+    }
+    
+    .pdf-nav-btn {
+        flex-shrink: 0;
+        width: auto;
+    }
+}
+
+/* ======================================
+   PDF Tool Content
+   ====================================== */
+.pdf-tool-content {
+    flex-grow: 1;
+    background-color: var(--section-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+}
+
+.pdf-tool {
+    display: none;
+}
+
+.pdf-tool.active {
+    display: block;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pdf-tool h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: var(--text-color);
+}
+
+.pdf-tool > p {
+    color: var(--light-text);
+    margin-bottom: 2rem;
+}
+
+/* ======================================
+   File Upload Components
+   ====================================== */
+.file-upload-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .file-upload-container {
+        flex-direction: column;
+    }
+}
+
+.file-upload-area {
+    flex: 1;
+    min-height: 250px;
+    border: 2px dashed var(--primary-color);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.file-upload-area.small {
+    min-height: 180px;
+}
+
+.file-upload-area i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.file-upload-area h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-upload-area p {
+    color: var(--light-text);
+    margin-bottom: 1rem;
+}
+
+.file-upload-area:hover {
+    border-color: var(--secondary-color);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.file-upload-area.dragover {
+    border-color: var(--secondary-color);
+    background-color: rgba(244, 162, 97, 0.05);
+    transform: scale(1.02);
+}
+
+.file-upload-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.file-upload-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.file-input {
+    display: none;
+}
+
+.selected-files {
+    flex: 1;
+    min-height: 250px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.selected-files h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.file-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: rgba(156, 163, 104, 0.05);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    cursor: move;
+    transition: var(--transition);
+}
+
+.file-list li:hover {
+    background-color: rgba(156, 163, 104, 0.1);
+}
+
+.file-list li:last-child {
+    margin-bottom: 0;
+}
+
+.file-list .file-icon {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.file-list .file-name {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-list .file-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.file-list .file-action-btn {
+    border: none;
+    background: none;
+    color: var(--light-text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.file-list .file-action-btn:hover {
+    color: var(--primary-color);
+    background-color: rgba(156, 163, 104, 0.1);
+}
+
+.file-list .file-remove-btn:hover {
+    color: #e74c3c;
+}
+
+.sortable-ghost {
+    opacity: 0.5;
+}
+
+.sortable-drag {
+    opacity: 0.9;
+}
+
+/* ======================================
+   Tool Options
+   ====================================== */
+.page-numbers-options,
+.watermark-options,
+.compress-options,
+.encrypt-options {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.page-numbers-options h3,
+.watermark-options h3,
+.compress-options h3,
+.encrypt-options h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.option-group {
+    margin-bottom: 1.25rem;
+}
+
+.option-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.option-select,
+.option-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.option-select:focus,
+.option-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(156, 163, 104, 0.1);
+}
+
+.option-range {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    border-radius: 3px;
+}
+
+.option-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.option-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.option-range::-webkit-slider-thumb:hover {
+    background: var(--secondary-color);
+    transform: scale(1.2);
+}
+
+.option-range::-moz-range-thumb:hover {
+    background: var(--secondary-color);
+    transform: scale(1.2);
+}
+
+.option-group output {
+    display: block;
+    text-align: right;
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-top: 0.5rem;
+}
+
+.option-color {
+    width: 100%;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ======================================
+   Watermark Options
+   ====================================== */
+.watermark-type-selector {
+    display: flex;
+    margin-bottom: 1.5rem;
+    gap: 1.5rem;
+}
+
+.watermark-type-selector label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.watermark-type-selector input[type="radio"] {
+    margin-right: 8px;
+}
+
+.watermark-text-options,
+.watermark-image-options {
+    margin-bottom: 1.5rem;
+}
+
+#watermark-image-preview {
+    margin: 1rem 0;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#watermark-image-preview img {
+    max-width: 100%;
+    max-height: 148px;
+    object-fit: contain;
+}
+
+/* ======================================
+   Compression Levels
+   ====================================== */
+.compression-levels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.compression-level {
+    cursor: pointer;
+}
+
+.compression-level input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.level-box {
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+    background-color: rgba(156, 163, 104, 0.05);
+}
+
+.compression-level input[type="radio"]:checked + .level-box {
+    border-color: var(--primary-color);
+    background-color: rgba(156, 163, 104, 0.1);
+}
+
+.level-box i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.level-box h4 {
+    margin-bottom: 0.5rem;
+}
+
+.level-box p {
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+/* ======================================
+   Encrypt Options
+   ====================================== */
+.password-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.password-input-container {
+    position: relative;
+}
+
+.password-input-container input {
+    padding-right: 40px;
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--light-text);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.toggle-password-btn:hover {
+    color: var(--primary-color);
+}
+
+.password-strength-meter {
+    margin-bottom: 2rem;
+}
+
+.strength-bar {
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.strength-progress {
+    height: 100%;
+    background: linear-gradient(to right, #ff4747, #ffc107, #9CA368);
+    transition: width 0.3s ease;
+}
+
+.strength-text {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+.permissions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.permission-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.permission-checkbox input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* ======================================
+   Process Actions
+   ====================================== */
+.process-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.process-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.process-btn:hover:not(:disabled) {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.process-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ======================================
+   Privacy Section
+   ====================================== */
+.privacy-info {
+    background-color: var(--section-bg);
+    padding: 5rem 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.privacy-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.privacy-content h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.privacy-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.privacy-feature {
+    text-align: center;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.privacy-feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-feature i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.privacy-feature h3 {
+    margin-bottom: 1rem;
+}
+
+.privacy-feature p {
+    color: var(--light-text);
+}
+
+/* ======================================
+   Responsive Adjustments
+   ====================================== */
+@media (max-width: 768px) {
+    .pdf-hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .pdf-hero p {
+        font-size: 1rem;
+    }
+    
+    .pdf-tool-content {
+        padding: 1.5rem;
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .password-fields {
+        grid-template-columns: 1fr;
+    }
+    
+    .compression-levels {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .pdf-hero {
+        padding-top: 100px;
+    }
+    
+    .pdf-hero .hero-content {
+        padding: 2rem 1rem;
+    }
+    
+    .security-badge {
+        flex-direction: column;
+        padding: 10px 15px;
+    }
+    
+    .security-badge i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+} 

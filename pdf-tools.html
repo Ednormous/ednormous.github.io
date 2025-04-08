@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tools - Ednormous</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pdf-tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Shapes -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <a href="index.html">Ednormous</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="tools.html" class="nav-link">Tools</a></li>
+                <li><a href="tools.html#about" class="nav-link">About</a></li>
+                <li><a href="tools.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="index.html" class="nav-link">Portfolio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Back to Tools Button -->
+    <a href="tools.html" class="back-to-tools">
+        <i class="fas fa-arrow-left"></i> Back to Tools
+    </a>
+
+    <main>
+        <section class="pdf-hero">
+            <div class="hero-content">
+                <h1>PDF <span class="highlight">Tools</span></h1>
+                <p>Powerful utilities to manage and modify your PDF documents with complete privacy and security.</p>
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure Processing: No files are stored on our servers</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="pdf-tools-container">
+            <div class="pdf-tools-nav">
+                <button class="pdf-nav-btn active" data-tool="merge">
+                    <i class="fas fa-object-group"></i>
+                    <span>Merge PDFs</span>
+                </button>
+                <button class="pdf-nav-btn" data-tool="page-numbers">
+                    <i class="fas fa-list-ol"></i>
+                    <span>Add Page Numbers</span>
+                </button>
+                <button class="pdf-nav-btn" data-tool="watermark">
+                    <i class="fas fa-tint"></i>
+                    <span>Watermark PDF</span>
+                </button>
+                <button class="pdf-nav-btn" data-tool="compress">
+                    <i class="fas fa-compress-alt"></i>
+                    <span>Compress PDF</span>
+                </button>
+                <button class="pdf-nav-btn" data-tool="encrypt">
+                    <i class="fas fa-lock"></i>
+                    <span>Encrypt PDF</span>
+                </button>
+            </div>
+
+            <div class="pdf-tool-content">
+                <!-- Merge PDFs Tool -->
+                <div class="pdf-tool active" id="merge-tool">
+                    <h2>Merge PDFs</h2>
+                    <p>Combine multiple PDF files into a single document. Drag and drop to reorder.</p>
+                    
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" id="merge-upload-area">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Drag & Drop Files Here</h3>
+                            <p>or</p>
+                            <label for="merge-file-input" class="file-upload-btn">Select Files</label>
+                            <input type="file" id="merge-file-input" multiple accept=".pdf" class="file-input">
+                        </div>
+                        
+                        <div class="selected-files" id="merge-selected-files">
+                            <h3>Selected Files</h3>
+                            <ul class="file-list sortable" id="merge-file-list"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-actions">
+                        <button id="merge-process-btn" class="process-btn" disabled>
+                            <i class="fas fa-object-group"></i> Merge PDFs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Page Numbers Tool -->
+                <div class="pdf-tool" id="page-numbers-tool">
+                    <h2>Add Page Numbers</h2>
+                    <p>Insert page numbers at your preferred position in the document.</p>
+                    
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" id="page-numbers-upload-area">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Drag & Drop PDF Here</h3>
+                            <p>or</p>
+                            <label for="page-numbers-file-input" class="file-upload-btn">Select File</label>
+                            <input type="file" id="page-numbers-file-input" accept=".pdf" class="file-input">
+                        </div>
+                        
+                        <div class="selected-files" id="page-numbers-selected-file">
+                            <h3>Selected File</h3>
+                            <div id="page-numbers-file-name"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="page-numbers-options">
+                        <h3>Page Number Options</h3>
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label for="page-numbers-position">Position</label>
+                                <select id="page-numbers-position" class="option-select">
+                                    <option value="bottom-right">Bottom Right</option>
+                                    <option value="bottom-center">Bottom Center</option>
+                                    <option value="bottom-left">Bottom Left</option>
+                                    <option value="top-right">Top Right</option>
+                                    <option value="top-center">Top Center</option>
+                                    <option value="top-left">Top Left</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="page-numbers-start">Start From</label>
+                                <input type="number" id="page-numbers-start" class="option-input" value="1" min="1">
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="page-numbers-format">Format</label>
+                                <select id="page-numbers-format" class="option-select">
+                                    <option value="Page n">Page n</option>
+                                    <option value="n">n</option>
+                                    <option value="n/total">n/total</option>
+                                    <option value="- n -">- n -</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="page-numbers-font-size">Font Size</label>
+                                <input type="number" id="page-numbers-font-size" class="option-input" value="10" min="6" max="24">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-actions">
+                        <button id="page-numbers-process-btn" class="process-btn" disabled>
+                            <i class="fas fa-list-ol"></i> Add Page Numbers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Watermark PDF Tool -->
+                <div class="pdf-tool" id="watermark-tool">
+                    <h2>Watermark PDF</h2>
+                    <p>Add text or image watermarks to protect your documents.</p>
+                    
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" id="watermark-upload-area">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Drag & Drop PDF Here</h3>
+                            <p>or</p>
+                            <label for="watermark-file-input" class="file-upload-btn">Select File</label>
+                            <input type="file" id="watermark-file-input" accept=".pdf" class="file-input">
+                        </div>
+                        
+                        <div class="selected-files" id="watermark-selected-file">
+                            <h3>Selected File</h3>
+                            <div id="watermark-file-name"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="watermark-options">
+                        <h3>Watermark Options</h3>
+                        
+                        <div class="watermark-type-selector">
+                            <label>
+                                <input type="radio" name="watermark-type" value="text" checked>
+                                <span>Text Watermark</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="watermark-type" value="image">
+                                <span>Image Watermark</span>
+                            </label>
+                        </div>
+                        
+                        <div class="watermark-text-options">
+                            <div class="option-group">
+                                <label for="watermark-text">Watermark Text</label>
+                                <input type="text" id="watermark-text" class="option-input" placeholder="CONFIDENTIAL" value="CONFIDENTIAL">
+                            </div>
+                            
+                            <div class="options-grid">
+                                <div class="option-group">
+                                    <label for="watermark-opacity">Opacity</label>
+                                    <input type="range" id="watermark-opacity" class="option-range" min="10" max="100" value="30">
+                                    <output for="watermark-opacity">30%</output>
+                                </div>
+                                
+                                <div class="option-group">
+                                    <label for="watermark-rotation">Rotation (degrees)</label>
+                                    <input type="range" id="watermark-rotation" class="option-range" min="-180" max="180" value="-45">
+                                    <output for="watermark-rotation">-45°</output>
+                                </div>
+                                
+                                <div class="option-group">
+                                    <label for="watermark-font-size">Font Size</label>
+                                    <input type="number" id="watermark-font-size" class="option-input" value="48" min="12" max="120">
+                                </div>
+                                
+                                <div class="option-group">
+                                    <label for="watermark-color">Color</label>
+                                    <input type="color" id="watermark-color" class="option-color" value="#999999">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="watermark-image-options" style="display: none;">
+                            <div class="file-upload-area small" id="watermark-image-upload-area">
+                                <i class="fas fa-image"></i>
+                                <h3>Select Watermark Image</h3>
+                                <p>or</p>
+                                <label for="watermark-image-input" class="file-upload-btn">Select Image</label>
+                                <input type="file" id="watermark-image-input" accept="image/*" class="file-input">
+                            </div>
+                            
+                            <div id="watermark-image-preview"></div>
+                            
+                            <div class="options-grid">
+                                <div class="option-group">
+                                    <label for="watermark-image-opacity">Opacity</label>
+                                    <input type="range" id="watermark-image-opacity" class="option-range" min="10" max="100" value="30">
+                                    <output for="watermark-image-opacity">30%</output>
+                                </div>
+                                
+                                <div class="option-group">
+                                    <label for="watermark-image-scale">Scale</label>
+                                    <input type="range" id="watermark-image-scale" class="option-range" min="10" max="100" value="50">
+                                    <output for="watermark-image-scale">50%</output>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="watermark-position">Position</label>
+                            <select id="watermark-position" class="option-select">
+                                <option value="center">Center</option>
+                                <option value="tile">Tile</option>
+                                <option value="top-left">Top Left</option>
+                                <option value="top-right">Top Right</option>
+                                <option value="bottom-left">Bottom Left</option>
+                                <option value="bottom-right">Bottom Right</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="process-actions">
+                        <button id="watermark-process-btn" class="process-btn" disabled>
+                            <i class="fas fa-tint"></i> Add Watermark
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compress PDF Tool -->
+                <div class="pdf-tool" id="compress-tool">
+                    <h2>Compress PDF</h2>
+                    <p>Reduce the file size of your PDF document for easier sharing.</p>
+                    
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" id="compress-upload-area">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Drag & Drop PDF Here</h3>
+                            <p>or</p>
+                            <label for="compress-file-input" class="file-upload-btn">Select File</label>
+                            <input type="file" id="compress-file-input" accept=".pdf" class="file-input">
+                        </div>
+                        
+                        <div class="selected-files" id="compress-selected-file">
+                            <h3>Selected File</h3>
+                            <div id="compress-file-name"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="compress-options">
+                        <h3>Compression Level</h3>
+                        <div class="compression-levels">
+                            <label class="compression-level">
+                                <input type="radio" name="compression-level" value="low" checked>
+                                <div class="level-box">
+                                    <i class="fas fa-compress"></i>
+                                    <h4>Low</h4>
+                                    <p>Better quality, larger file size</p>
+                                </div>
+                            </label>
+                            
+                            <label class="compression-level">
+                                <input type="radio" name="compression-level" value="medium">
+                                <div class="level-box">
+                                    <i class="fas fa-compress-alt"></i>
+                                    <h4>Medium</h4>
+                                    <p>Balanced quality and size</p>
+                                </div>
+                            </label>
+                            
+                            <label class="compression-level">
+                                <input type="radio" name="compression-level" value="high">
+                                <div class="level-box">
+                                    <i class="fas fa-compress-arrows-alt"></i>
+                                    <h4>High</h4>
+                                    <p>Smaller file size, reduced quality</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="process-actions">
+                        <button id="compress-process-btn" class="process-btn" disabled>
+                            <i class="fas fa-compress-alt"></i> Compress PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Encrypt PDF Tool -->
+                <div class="pdf-tool" id="encrypt-tool">
+                    <h2>Encrypt PDF</h2>
+                    <p>Secure your PDF with password protection and encryption.</p>
+                    
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" id="encrypt-upload-area">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Drag & Drop PDF Here</h3>
+                            <p>or</p>
+                            <label for="encrypt-file-input" class="file-upload-btn">Select File</label>
+                            <input type="file" id="encrypt-file-input" accept=".pdf" class="file-input">
+                        </div>
+                        
+                        <div class="selected-files" id="encrypt-selected-file">
+                            <h3>Selected File</h3>
+                            <div id="encrypt-file-name"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="encrypt-options">
+                        <h3>Security Options</h3>
+                        
+                        <div class="password-fields">
+                            <div class="option-group">
+                                <label for="encrypt-password">Set Password</label>
+                                <div class="password-input-container">
+                                    <input type="password" id="encrypt-password" class="option-input" placeholder="Enter password">
+                                    <button type="button" class="toggle-password-btn">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="encrypt-confirm-password">Confirm Password</label>
+                                <div class="password-input-container">
+                                    <input type="password" id="encrypt-confirm-password" class="option-input" placeholder="Confirm password">
+                                    <button type="button" class="toggle-password-btn">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="password-strength-meter">
+                            <label>Password Strength</label>
+                            <div class="strength-bar">
+                                <div class="strength-progress" style="width: 0%;"></div>
+                            </div>
+                            <span class="strength-text">No password</span>
+                        </div>
+                        
+                        <h3>Permissions</h3>
+                        <div class="permissions-grid">
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permission" value="print" checked>
+                                <span>Allow Printing</span>
+                            </label>
+                            
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permission" value="copy" checked>
+                                <span>Allow Copying Text</span>
+                            </label>
+                            
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permission" value="edit" checked>
+                                <span>Allow Editing</span>
+                            </label>
+                            
+                            <label class="permission-checkbox">
+                                <input type="checkbox" name="permission" value="annotate" checked>
+                                <span>Allow Annotations</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="process-actions">
+                        <button id="encrypt-process-btn" class="process-btn" disabled>
+                            <i class="fas fa-lock"></i> Encrypt PDF
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="privacy-info">
+            <div class="privacy-content">
+                <h2>Your Privacy and Security</h2>
+                <div class="privacy-features">
+                    <div class="privacy-feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Secure Processing</h3>
+                        <p>All document processing happens in your browser. Files are never uploaded to our servers.</p>
+                    </div>
+                    
+                    <div class="privacy-feature">
+                        <i class="fas fa-eraser"></i>
+                        <h3>No Data Storage</h3>
+                        <p>Once processing is complete, all file data is automatically erased. Nothing is saved.</p>
+                    </div>
+                    
+                    <div class="privacy-feature">
+                        <i class="fas fa-lock"></i>
+                        <h3>End-to-End Encryption</h3>
+                        <p>Your files are encrypted during processing for maximum security.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Ednormous. All rights reserved.</p>
+    </footer>
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- PDF-LIB.js for actual PDF manipulation -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    
+    <!-- Sortable.js for drag and drop reordering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    
+    <!-- FileSaver.js for easier file saving -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- PDF Tools JavaScript -->
+    <script src="js/pdf-tools.js"></script>
+</body>
+</html> 

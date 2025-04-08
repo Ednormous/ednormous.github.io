@@ -690,6 +690,25 @@ section, .tool-card, .feature-toolbar {
     transform: translateZ(10px);
 }
 
+.tool-link {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tool-link:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
 /* ======================================
    Feature Toolbar
    ====================================== */
